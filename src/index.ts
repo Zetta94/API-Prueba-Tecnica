@@ -40,6 +40,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL }),
+  cookie: { secure: false, httpOnly: true }
 }))
 
 //Inicializacion de Passport

@@ -2,6 +2,7 @@ import {Router} from 'express'
 import passport from 'passport'
 import { Request, Response} from 'express'
 import { isAuthenticated } from '../middlewares/auth'
+import { IUser } from '../dao/models/user.model'
 
 const router = Router()
 //[POST] 🌐 /register
@@ -20,21 +21,33 @@ router.post('/login',
 )
   
 //[POST] 🌐 /logout
-router.post('/logout', isAuthenticated, (req:Request, res:Response) => {
+router.post('/logout', isAuthenticated, (req: Request, res: Response) => {
     req.logout((err) => {
         if (err) {
-            return res.status(500).json({ error: 'Failed to log out' })
+            return res.status(500).json({ error: 'Failed to log out' });
         }
-        res.status(200).json({ message: 'Successfully logged out' })
-    })
-})
+        res.status(200).json({ message: 'Successfully logged out' });
+    });
+});
 
-router.get('/current', passport.authenticate('session'), (req, res) => {
-    if (req.isAuthenticated()) {
-      res.json(req.user);
+
+//[GET] 🌐 /current
+router.get('/current', isAuthenticated, (req, res) => {
+    const user = req.user as IUser;
+
+    if (user) {
+        const userCurrent = {
+            first_name: user.first_name, 
+            last_name: user.last_name,
+            email: user.email,
+            favourite_movies: user.favourite_movies
+        };
+        res.json(userCurrent);
     } else {
-      res.status(401).json({ message: 'Not authenticated' });
+        res.status(404).json({ message: 'User not found' });
     }
-  });
+});
+
+
 
 export default router

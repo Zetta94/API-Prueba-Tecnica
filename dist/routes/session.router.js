@@ -24,12 +24,20 @@ router.post('/logout', auth_1.isAuthenticated, (req, res) => {
         res.status(200).json({ message: 'Successfully logged out' });
     });
 });
-router.get('/current', passport_1.default.authenticate('session'), (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json(req.user);
+//[GET] 🌐 /current
+router.get('/current', auth_1.isAuthenticated, (req, res) => {
+    const user = req.user;
+    if (user) {
+        const userCurrent = {
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            favourite_movies: user.favourite_movies
+        };
+        res.json(userCurrent);
     }
     else {
-        res.status(401).json({ message: 'Not authenticated' });
+        res.status(404).json({ message: 'User not found' });
     }
 });
 exports.default = router;
