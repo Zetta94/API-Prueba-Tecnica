@@ -24,10 +24,9 @@ app.use(bodyParser.json())
 
 //Configuracion de cors
 const corsOptions = {
-  origin: process.env.ORIGIN_CREDENTIAL || '*',
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
-  credentials: true
 }
 
 app.use(cors(corsOptions))
@@ -41,7 +40,6 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URL }),
-  cookie: { secure: false, httpOnly: true }
 }))
 
 //Inicializacion de Passport

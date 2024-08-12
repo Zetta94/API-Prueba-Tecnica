@@ -5,7 +5,6 @@ interface IUser extends Document {
   last_name: string
   email: string
   password: string
-  role?: string
   favourite_movies: mongoose.Types.ObjectId[]
 }
 
