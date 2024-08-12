@@ -17,8 +17,6 @@ const passport_1 = __importDefault(require("passport"));
 const passport_config_1 = __importDefault(require("./configs/passport.config"));
 require("./configs/passport.config");
 const cors_1 = __importDefault(require("cors"));
-
-
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3001;

@@ -29,4 +29,12 @@ router.post('/logout', isAuthenticated, (req:Request, res:Response) => {
     })
 })
 
+router.get('/current', passport.authenticate('session'), (req, res) => {
+    if (req.isAuthenticated()) {
+      res.json(req.user);
+    } else {
+      res.status(401).json({ message: 'Not authenticated' });
+    }
+  });
+
 export default router

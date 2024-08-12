@@ -24,4 +24,12 @@ router.post('/logout', auth_1.isAuthenticated, (req, res) => {
         res.status(200).json({ message: 'Successfully logged out' });
     });
 });
+router.get('/current', passport_1.default.authenticate('session'), (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json(req.user);
+    }
+    else {
+        res.status(401).json({ message: 'Not authenticated' });
+    }
+});
 exports.default = router;
