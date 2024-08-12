@@ -1,5 +1,5 @@
 info:
-  title: Movie API
+  title: Movies API
   version: 1.0.0
   description: API para obtener películas populares desde The Movie Database y almacenarlas en MongoDB.
 
@@ -24,9 +24,15 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/movies'
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Success"
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/movies'
         '500':
           description: Error fetching movies.
           content:
@@ -37,7 +43,6 @@ paths:
                   error:
                     type: string
                     example: Failed to fetch movies
-
 
   /api/movies/db:
     get:

@@ -18,6 +18,14 @@ class UserService {
             throw new Error('Database query failed')
         }
     }
+
+    async getFavourites(uid:string){
+        try {
+            return await manager.getAllFavourites(uid)
+        } catch (error) {
+            throw new Error('Database query failed')
+        }
+    }
 }
 
 export default UserService

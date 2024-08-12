@@ -26,6 +26,18 @@ class UserManager {
             throw new Error('Database query failed')
           }
     }
+
+    async getAllFavourites(uid: string) {
+      try {
+          const user = await userModel.findById(uid).populate('favourite_movies')
+          if (!user) {
+              throw new Error('User not found')
+          }
+          return user.favourite_movies
+      } catch (error) {
+          throw new Error('Database query failed')
+      }
+  }
 }
 
 export default UserManager

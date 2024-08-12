@@ -1,0 +1,190 @@
+info:
+  title: Movies API
+  version: 1.0.0
+  description: API for managing users and their favourite movies
+
+paths:
+  /api/users/{uid}/favourite:
+    get:
+      summary: Retrieve Favourite Movies
+      description: Retrieve a list of favourite movies for a specific user.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the user.
+      responses:
+        '200':
+          description: A list of favourite movies.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Favourites Movies
+                  payload:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          example: "6123abcdef1234567890abcd"
+                        title:
+                          type: string
+                          example: "The Shawshank Redemption"
+                        release_date:
+                          type: string
+                          example: "1994-09-23"
+                        genre_ids:
+                          type: array
+                          items:
+                            type: integer
+                          example: [18, 80]
+                        vote_average:
+                          type: number
+                          format: float
+                          example: 8.7
+                        overview:
+                          type: string
+                          example: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency."
+        '400':
+          description: Bad Request - The user ID is missing or invalid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "User ID is missing or invalid."
+        '500':
+          description: Internal Server Error - Failed to retrieve favourite movies.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to find movies from favourites."
+
+  /api/users/{uid}/favourite/{mid}:
+    put:
+      tags:
+        - Users
+      summary: Add a movie to user's favourites
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+        - name: mid
+          in: path
+          required: true
+          description: Movie ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie added to favourites successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Movie added to favourites
+                  updatedUser:
+                    $ref: '#/components/schemas/User'
+        '500':
+          description: Failed to add movie to favourites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Failed to add movie to favourites
+    delete:
+      tags:
+        - Users
+      summary: Remove a movie from user's favourites
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+        - name: mid
+          in: path
+          required: true
+          description: Movie ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movie removed from favourites successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Movie removed from favourites
+                  updatedUser:
+                    $ref: '#/components/schemas/User'
+        '500':
+          description: Failed to remove movie from favourites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Failed to remove movie from favourites
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the user
+        first_name:
+          type: string
+          maxLength: 15
+          description: First name of the user
+        last_name:
+          type: string
+          maxLength: 15
+          description: Last name of the user
+        email:
+          type: string
+          description: Email address of the user
+        password:
+          type: string
+          description: Hashed password of the user
+        role:
+          type: string
+          description: Role of the user
+        favourite_movies:
+          type: array
+          items:
+            type: string
+            description: List of favourite movie IDs
+

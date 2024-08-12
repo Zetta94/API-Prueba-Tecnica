@@ -8,10 +8,20 @@ export const getMovieAPI = async (req: Request, res: Response) => {
     try {
       const page = parseInt(req.query.page as string) || 1
       const movies = await service.getMoviesFromAPI(page)
-      res.json(movies)
+      res.status(201).json({message: "Success", payload: movies})
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch movies' })
     }
+}
+
+export const searchMovieByTitle = async (req: Request, res: Response) => {
+  try {
+    const { title } = req.body
+    const movie = await service.searchMoviesByTitle(title)
+    res.status(201).json({message: "Success", payload: movie})
+  } catch (error) {
+    res.status(500).json({ error: 'Error buscando la película por título' })
+  }
 }
 
 //Controladores para DB

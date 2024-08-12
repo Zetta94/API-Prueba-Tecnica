@@ -13,6 +13,13 @@ class MovieService {
         return response.data.results
     }
 
+    async searchMoviesByTitle(title: string) {
+        const response = await apiData.get('/search/movie', {
+          params: { query: title },
+        });
+        return response.data.results;
+      }
+      
     //Servicios para Base de datos
 
     async getAllMoviesDB() {

@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import { getMovieFromId, getMovieAPI, getAllMoviesDB, createMovie,deleteMovieFromId,updateMovie} from '../controllers/movie.controller';
+import { getMovieFromId,searchMovieByTitle, getMovieAPI, getAllMoviesDB, createMovie,deleteMovieFromId,updateMovie} from '../controllers/movie.controller';
 
 const router = Router();
 
 // [GET] 🌐 /api/movies
 router.get('/', getMovieAPI)
+
+// [GET] 🌐 /api/movies/search
+router.get('/search', searchMovieByTitle)
 
 //[GET] 🌐 /api/movies/db
 router.get('/db',getAllMoviesDB)
