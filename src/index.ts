@@ -11,6 +11,7 @@ import session from 'express-session'
 import passport, { initialize } from 'passport'
 import initializePassport from './configs/passport.config'
 import './configs/passport.config'
+import cors from 'cors'
 
 dotenv.config()
 const app: Application = express()
@@ -20,6 +21,15 @@ const PORT = process.env.PORT || 3001
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+//Configuracion de cors
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+};
+
+app.use(cors(corsOptions));
 
 // Configuración de Swagger
 setupSwagger(app) 
@@ -38,6 +48,10 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //Rutas
+app.use('/',(req,res)=>{
+  const hola = "Hola probando"
+  res.send(hola)
+})
 app.use('/api/movies',movieRouter)
 app.use('/',sessionRouter)
 app.use('/api/users',userRouter)
@@ -45,3 +59,5 @@ app.use('/api/users',userRouter)
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
+
+export default app;
