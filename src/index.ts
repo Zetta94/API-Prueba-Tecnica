@@ -48,10 +48,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //Rutas
-app.use('/',(req,res)=>{
-  const hola = "Hola probando"
-  res.send(hola)
-})
 app.use('/api/movies',movieRouter)
 app.use('/',sessionRouter)
 app.use('/api/users',userRouter)
