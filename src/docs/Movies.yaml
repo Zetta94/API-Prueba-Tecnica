@@ -1,0 +1,429 @@
+info:
+  title: Movie API
+  version: 1.0.0
+  description: API para obtener películas populares desde The Movie Database y almacenarlas en MongoDB.
+
+paths:
+  /api/movies:
+    get:
+      summary: Retrieve movies from themoviedb API
+      description: Fetches a list of popular movies from The Movie Database API and stores them in the database.
+      tags:
+        - API Free - themoviedb
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination.
+          required: false
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: A list of popular movies stored in the database.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/movies'
+        '500':
+          description: Error fetching movies.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Failed to fetch movies
+
+
+  /api/movies/db:
+    get:
+      summary: Retrieve all movies from the database
+      description: Fetches all movies stored in the MongoDB database.
+      tags:
+        - Database Mongo
+      responses:
+        '200':
+          description: Successfully retrieved the list of movies
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Success"
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/movies'
+        '404':
+          description: Movies not found in the database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Movies not found"
+        '500':
+          description: Failed to fetch movies due to server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to fetch the movie"
+
+    post:
+      summary: Create a new movie
+      description: Adds a new movie to the database.
+      tags:
+          - Database Mongo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adult:
+                  type: boolean
+                backdrop_path:
+                  type: string
+                genre_ids:
+                  type: array
+                  items:
+                    type: integer
+                id:
+                  type: integer
+                original_language:
+                  type: string
+                original_title:
+                  type: string
+                overview:
+                  type: string
+                popularity:
+                  type: number
+                  format: float
+                poster_path:
+                  type: string
+                release_date:
+                  type: string
+                  format: date
+                title:
+                  type: string
+                video:
+                  type: boolean
+                vote_average:
+                  type: number
+                  format: float
+                vote_count:
+                  type: integer
+      responses:
+        '201':
+          description: Movie created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  payload:
+                    type: object
+                    properties:
+                      adult:
+                        type: boolean
+                      backdrop_path:
+                        type: string
+                      genre_ids:
+                        type: array
+                        items:
+                          type: integer
+                      id:
+                        type: integer
+                      original_language:
+                        type: string
+                      original_title:
+                        type: string
+                      overview:
+                        type: string
+                      popularity:
+                        type: number
+                        format: float
+                      poster_path:
+                        type: string
+                      release_date:
+                        type: string
+                        format: date
+                      title:
+                        type: string
+                      video:
+                        type: boolean
+                      vote_average:
+                        type: number
+                        format: float
+                      vote_count:
+                        type: integer
+        '404':
+          description: Movie creation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /api/movies/db/{id}:
+    get:
+      summary: Retrieve a movie by its ID from the database
+      description: Fetches a specific movie from the MongoDB database using its ID.
+      tags:
+        - Database Mongo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the movie to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved the movie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Success"
+                  payload:
+                    $ref: '#/components/schemas/movies'
+        '404':
+          description: Movie not found in the database
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Movie not found"
+        '500':
+          description: Failed to fetch the movie due to server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to fetch the movie"
+
+    put:
+      summary: Update a specific property of a movie
+      description: Allows updating a specific property of a movie in the database.
+      tags:
+        - Database Mongo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the movie to be updated
+          schema:
+            type: string
+      requestBody:
+        description: Data needed to update the movie property
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyName:
+                  type: string
+                  description: The name of the property to update
+                  example: title
+                newValue:
+                  type: string
+                  description: The new value for the property
+                  example: "New movie title"
+              required:
+                - propertyName
+                - newValue
+        required: true
+      responses:
+        200:
+          description: Movie updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Success'
+                  updatedProperty:
+                    type: object
+                    properties:
+                      propertyName:
+                        type: string
+                      newValue:
+                        type: string
+        400:
+          description: Invalid request, missing data or incorrect format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Invalid request body'
+        404:
+          description: Movie not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Movie not found'
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'Failed to update the movie'
+
+    delete:
+      summary: Delete a movie by ID
+      description: Removes a movie from the database by its ID.
+      tags:
+        - Database Mongo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the movie to delete.
+      responses:
+        '201':
+          description: Movie successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  Status:
+                    type: string
+        '404':
+          description: Movie not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+components:
+  schemas:
+    movies:
+      type: object
+      properties:
+        adult:
+          type: boolean
+          description: Indicates if the movie is for adults.
+          example: false
+        backdrop_path:
+          type: string
+          description: Path to the backdrop image.
+          example: "/bOGkgRGdhrBYJSLpXaxhXVstddV.jpg"
+        genre_ids:
+          type: array
+          items:
+            type: integer
+          description: List of genre IDs associated with the movie.
+          example: [28, 12, 14]
+        id:
+          type: integer
+          description: Movie ID.
+          example: 299536
+        original_language:
+          type: string
+          description: Original language of the movie.
+          example: "en"
+        original_title:
+          type: string
+          description: Original title of the movie.
+          example: "Avengers: Infinity War"
+        overview:
+          type: string
+          description: Movie overview.
+          example: "As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle..."
+        popularity:
+          type: number
+          format: float
+          description: Popularity score of the movie.
+          example: 3578.319
+        poster_path:
+          type: string
+          description: Path to the poster image.
+          example: "/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg"
+        release_date:
+          type: string
+          format: date
+          description: Release date of the movie.
+          example: "2018-04-25"
+        title:
+          type: string
+          description: Movie title.
+          example: "Avengers: Infinity War"
+        video:
+          type: boolean
+          description: Indicates if the movie is a video.
+          example: false
+        vote_average:
+          type: number
+          format: float
+          description: Average vote score.
+          example: 8.3
+        vote_count:
+          type: number
+          description: Total number of votes.
+          example: 19873
