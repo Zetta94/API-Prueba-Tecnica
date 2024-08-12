@@ -24,9 +24,10 @@ app.use(bodyParser.json())
 
 //Configuracion de cors
 const corsOptions = {
-  origin: '*',
+  origin: process.env.ORIGIN_CREDENTIAL || '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
+  credentials: true
 }
 
 app.use(cors(corsOptions))
