@@ -27,9 +27,9 @@ const corsOptions = {
   origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
-};
+}
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions))
 
 // Configuración de Swagger
 setupSwagger(app) 
@@ -60,4 +60,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
 
-export default app;
+export default app
