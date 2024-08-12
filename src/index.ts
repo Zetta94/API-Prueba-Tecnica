@@ -16,8 +16,6 @@ dotenv.config()
 const app: Application = express()
 const PORT = process.env.PORT || 3001
 
-//! Agregar swagger en las rutas de usuario.
-//! Empezar con el front y hacer deploy del back.
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
