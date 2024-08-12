@@ -17,6 +17,8 @@ const passport_1 = __importDefault(require("passport"));
 const passport_config_1 = __importDefault(require("./configs/passport.config"));
 require("./configs/passport.config");
 const cors_1 = __importDefault(require("cors"));
+
+
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3001;
@@ -25,9 +27,10 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
 //Configuracion de cors
 const corsOptions = {
-    origin: '*',
+    origin: process.env.ORIGIN_CREDENTIAL || '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Authorization',
+    credentials: true
 };
 app.use((0, cors_1.default)(corsOptions));
 // Configuración de Swagger

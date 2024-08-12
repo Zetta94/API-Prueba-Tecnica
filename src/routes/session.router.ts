@@ -9,7 +9,7 @@ router.post('/register', passport.authenticate('register', { session: true }),
     (req:Request, res:Response) => {
       res.status(201).json({ message: 'User registered successfully', user: req.user })
     }
-  )
+)
 
 //[POST] 🌐 /login
 router.post('/login', 
@@ -17,7 +17,7 @@ router.post('/login',
     (req:Request, res:Response) => {
       res.status(200).json({ message: 'Login successful', user: req.user })
     }
-  )
+)
   
 //[POST] 🌐 /logout
 router.post('/logout', isAuthenticated, (req:Request, res:Response) => {
