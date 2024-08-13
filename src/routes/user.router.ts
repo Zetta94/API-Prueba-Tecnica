@@ -4,7 +4,7 @@ import { isAuthenticated } from '../middlewares/auth';
 
 const router = Router()
 
-//[GET] 🌐 /:uid/favourite/:mid
+//[GET] 🌐 /:uid/favourite
 router.get('/:uid/favourite', shearchFavourites)
 
 // [PUT] 🌐 /:uid/favourite/:mid

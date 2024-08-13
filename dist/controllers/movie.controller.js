@@ -20,7 +20,7 @@ const getMovieAPI = async (req, res) => {
 exports.getMovieAPI = getMovieAPI;
 const searchMovieByTitle = async (req, res) => {
     try {
-        const { title } = req.body;
+        const { title } = req.query;
         const movie = await service.searchMoviesByTitle(title);
         res.status(201).json({ message: "Success", payload: movie });
     }

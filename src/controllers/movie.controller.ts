@@ -16,8 +16,8 @@ export const getMovieAPI = async (req: Request, res: Response) => {
 
 export const searchMovieByTitle = async (req: Request, res: Response) => {
   try {
-    const { title } = req.body
-    const movie = await service.searchMoviesByTitle(title)
+    const { title } = req.query
+    const movie = await service.searchMoviesByTitle(title as string)
     res.status(201).json({message: "Success", payload: movie})
   } catch (error) {
     res.status(500).json({ error: 'Error buscando la película por título' })
