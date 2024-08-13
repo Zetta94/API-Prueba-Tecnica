@@ -13,7 +13,7 @@ router.post('/register', passport_1.default.authenticate('register', { session: 
 });
 //[POST] 🌐 /login
 router.post('/login', passport_1.default.authenticate('login', { session: true }), (req, res) => {
-    res.status(200).json({ message: 'Login successful', user: req.user });
+    res.status(200).json({ message: 'Login successful', user: req.user, cookie: req.sessionID });
 });
 //[POST] 🌐 /logout
 router.post('/logout', auth_1.isAuthenticated, (req, res) => {

@@ -8,7 +8,7 @@ const router = Router()
 //[POST] 🌐 /register
 router.post('/register', passport.authenticate('register', { session: true }), 
     (req:Request, res:Response) => {
-      res.status(201).json({ message: 'User registered successfully', user: req.user })
+        res.status(201).json({ message: 'User registered successfully', user: req.user })
     }
 )
 
@@ -16,7 +16,7 @@ router.post('/register', passport.authenticate('register', { session: true }),
 router.post('/login', 
     passport.authenticate('login', { session: true }), 
     (req:Request, res:Response) => {
-      res.status(200).json({ message: 'Login successful', user: req.user })
+        res.status(200).json({ message: 'Login successful', user: req.user , cookie : req.sessionID})
     }
 )
   
