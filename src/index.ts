@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 
 //Configuracion de cors
 const corsOptions = {
-  origin: '*',
+  origin: 'https://client-prueba-tecnica-579mfy2vj-manuels-projects-5a3093b2.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization',
   credentials: true
