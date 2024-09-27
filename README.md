@@ -23,6 +23,7 @@ Este proyecto es una aplicación web desarrollada en **TypeScript** utilizando *
 
 ### Estructura
 
+```
 ├── test/                             # Pruebas de la aplicación
 │   ├── carts.spec.js                 # Pruebas para el controlador de carritos
 │   ├── products.spec.js              # Pruebas para el controlador de productos
@@ -104,7 +105,7 @@ Este proyecto es una aplicación web desarrollada en **TypeScript** utilizando *
 ├── package-lock.json                 # Lockfile de npm
 ├── package.json                      # Archivo de configuración de npm
 │
-
+```
 
 ## Alojamiento
 
