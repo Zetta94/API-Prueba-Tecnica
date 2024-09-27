@@ -3,12 +3,14 @@
 ## Tabla de Contenidos
 
 - [Descripción](#descripción)
+- [Funcionalidades](#Funcionalidades)
+- [Estructura](Estructura)
 - [Alojamiento](#Alojamiento)
 - [Instalación y Ejecución](#instalación-y-ejecución)
   - [Backend](#backend)
-  - [Frontend](#frontend)
 - [Tecnologías](#Tecnologías)
 - [Requerimientos](#Requerimientos)
+- [Plus](#Plus)
   
 ## Descripción
 
